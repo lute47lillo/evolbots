@@ -12,7 +12,9 @@ p.setGravity(0,0,-9.8)
 
 # Load the entities generated with pyrosim
 planeId = p.loadURDF("plane.urdf") #Add a floor
-p.loadSDF("boxes.sdf")
+# robotID = p.loadURDF("body.urdf") #Add a robot
+robot3Piece_ID = p.loadURDF("3p_body.urdf")
+p.loadSDF("world.sdf")
 
 for i in range(0,1000):
     p.stepSimulation()
