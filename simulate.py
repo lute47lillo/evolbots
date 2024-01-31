@@ -35,6 +35,24 @@ for i in range(0,1000):
     frontLegTouch = pyrosim.Get_Touch_Sensor_Value_For_Link("FrontLeg")
     frontLegSensorValues[i] = frontLegTouch
     
+    # Create a motor 
+    """
+        bodyIndex: what robot the motor is going to be attached to.
+        jointName: what joint from the robot, the motor is going to be attached to.
+        controlMode: determines how the motor will attempt to control the motion of the joint.
+            - Position control, the motor receives as input a target position.
+            - Velocity control is usually used for continuously rotating objects.
+        targetPosition: Desired position.
+        maxForce: cap the total torque ever used by a motor. Newton/meter units
+    """
+    pyrosim.Set_Motor_For_Joint(
+        bodyIndex = robot3Piece_ID,
+        jointName = "Torso_BackLeg",
+        controlMode = p.POSITION_CONTROL,
+        targetPosition = 0.0,
+        maxForce = 500
+    )
+    
     time.sleep(0.01)
 
 np.save("/Users/lutelillo/Desktop/UVM SPRING'24/CSYS5990A_Advanced Evolutionary Robotics/evolbots/data/sensors.npy", backLegSensorValues)
