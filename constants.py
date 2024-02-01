@@ -15,10 +15,6 @@ new_max = np.pi/4
 old_min = -1
 old_max = 1
 
-# Sensors
-backLegSensorValues = np.zeros(1000)
-frontLegSensorValues = np.zeros(1000)
-
 # Create offset movement Back Leg
 amplitude = np.pi/2
 frequency = 8
@@ -30,3 +26,10 @@ amplitude_front = (np.pi/4)/2
 frequency_front = 8
 phaseOffset_front = np.pi/4
 sin_offset_front = []
+
+# Sinusoidally values. Later used for movements in the motor schema.
+targetAngles = np.linspace(0, 2*np.pi, 1000)
+
+# Calculate the scaled values using linear transformation
+scaled_values = (np.sin(targetAngles) - old_min) / (old_max - old_min) * (new_max - new_min) + new_min
+sin = np.sin(scaled_values)

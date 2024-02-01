@@ -1,0 +1,22 @@
+SENSORS
+
+    - Touch sensors only work in non-root links.
+        • Not in contact = -1. In contact = 1.
+
+
+LINKS 
+
+    - If two links are connected by a joint,
+    at the beginning of the simulation the angle between them is considered to be zero radians.
+
+    
+JOINTS
+
+    # Only the first link in a robot --- the "root" link --- has an absolute position.
+    # Every other link has a position relative to its "upstream" joint.
+    
+    
+    # Create the joint for the links. The position should be right where both joints come together.
+    # By convention the name should be Parent_Child joint names.
+    # BE aware of relative and absolute joint positions.
+    # First Joint is always absolute position wrt 1st Link. The rest are relative to this first set.
