@@ -95,8 +95,23 @@ def create_3piece_robot():
     pyrosim.Send_Cube(name="FrontLeg", pos=[x-1,y,z-2] , size=[length, width, height])
     
     pyrosim.End()
+    
+def generate_brain():
+    pyrosim.Start_NeuralNetwork("brain.nndf")
+    
+    # Send value from links sensors to sensor neuros.
+    pyrosim.Send_Sensor_Neuron(name = 0 , linkName = "Torso")
+    pyrosim.Send_Sensor_Neuron(name = 1 , linkName = "BackLeg")
+    pyrosim.Send_Sensor_Neuron(name = 2 , linkName = "FrontLeg")
+    
+    # Send to motor neurons for actions. Using the joints
+    pyrosim.Send_Motor_Neuron( name = 3 , jointName = "Torso_BackLeg")
+    pyrosim.Send_Motor_Neuron( name = 4 , jointName = "Torso_FrontLeg")
+    
+    pyrosim.End()
 
 create_world()
 # create_robot()
 create_3piece_robot()
+generate_brain()
     

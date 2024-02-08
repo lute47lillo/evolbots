@@ -6,7 +6,7 @@ class NEURAL_NETWORK:
 
     def __init__(self,nndfFileName):
 
-        self.neurons = {}
+        self.neurons = {} # name of the neurons defined
 
         self.synapses = {}
 
@@ -27,6 +27,37 @@ class NEURAL_NETWORK:
         self.Print_Motor_Neuron_Values()
 
         print("")
+        
+    def Update(self):
+        
+        for neuron_name in self.neurons:
+            if self.neurons[neuron_name].Is_Sensor_Neuron():
+                self.neurons[neuron_name].Update_Sensor_Neuron() # Reads sensors from links
+            else:
+                self.neurons[neuron_name].Update_Hidden_Or_Motor_Neuron()
+                
+    def Get_Neuron_Names(self):
+        """
+            Get the names of the neurones. They could be sensor, hidden or motor.
+        """
+        return self.neurons.keys()
+    
+    def Is_Motor_Neuron(self, neuronName):
+        """ 
+            Check if a particular neuron is part of the motor net, so it can be used in ROBOT Act() method.
+        """
+        if self.neurons[neuronName].Is_Motor_Neuron():
+            return True
+        
+    def Get_Motor_Neurons_Joint(self, neuron_name):
+        return self.neurons[neuron_name].Get_Joint_Name()
+    
+    def Get_Value_Of(self, neuron_name):
+        """
+            Get the value of a particular neuron to be used in the ROBOT method Act() as desired angle for the joint
+        """
+        return self.neurons[neuron_name].Get_Value()
+            
 
 # ---------------- Private methods --------------------------------------
 

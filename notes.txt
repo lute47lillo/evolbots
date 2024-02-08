@@ -20,3 +20,16 @@ JOINTS
     # By convention the name should be Parent_Child joint names.
     # BE aware of relative and absolute joint positions.
     # First Joint is always absolute position wrt 1st Link. The rest are relative to this first set.
+
+
+NEURONS
+
+    - About NNDF files:
+        nndf files, in contrast, are specific to pyrosim, our in-house python robotics simulator. 
+        nndf files are designed to shorten the time it takes you to simulate a neural network-controlled robot.
+
+    - How they received information:
+        sensor neurons receive values from sensors. We are going to name our neurons with numbers, 
+        because we are going to update the values of each neuron in our neural network, 
+        every simulation time step, in a specific order: sensor neurons first, hidden neurons next,
+        and finally motor neurons.

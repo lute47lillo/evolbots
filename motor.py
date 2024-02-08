@@ -26,29 +26,14 @@ class MOTOR:
         self.frequency = c.frequency
         self.phase_offset = c.phaseOffset
         self.jointName = jointName
-        
-        self.Prepare_To_Act()
 
-    
-    def Prepare_To_Act(self):
-        # if self.jointName == "Torso_BackLeg":
-        #     self.frequency = self.frequency * 0.5 
-        
-        self.targetAngles = np.arange(0, 2*np.pi, 2*np.pi/1000)
-        self.x = self.frequency * self.targetAngles + self.phase_offset
-        self.motor_values = self.amplitude * np.sin(self.x)
-    
-        
-    def Set_Value(self, robot, t):
+    # desired angle is the angle passed to the Motor Neuron to act
+    def Set_Value(self, robot, desiredAngle):
         self.robot = robot
         pyrosim.Set_Motor_For_Joint(
             bodyIndex = self.robot,
             jointName = self.jointName,
             controlMode = p.POSITION_CONTROL,
-            targetPosition = self.motor_values[t],
+            targetPosition = desiredAngle,
             maxForce = 35
         )
-        
-    def Save_Values(self):
-        np.save("data/" + self.jointName + "MotorValues", self.motor_values)
-        
