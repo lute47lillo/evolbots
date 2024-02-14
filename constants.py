@@ -35,4 +35,7 @@ scaled_values = (np.sin(targetAngles) - old_min) / (old_max - old_min) * (new_ma
 sin = np.sin(scaled_values)
 
 # Number of generations to evolve a solution
-n_generations = 15
+n_generations = 10
+
+# Number of individuals per generation
+population_size = 10

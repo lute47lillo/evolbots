@@ -2,27 +2,49 @@ import numpy as np
 import pyrosim.pyrosim as pyrosim
 import os
 import random
+import time
 
 class SOLUTION:
     
-    def __init__(self) -> None:
+    def __init__(self, nextAvailableID) -> None:
         self.weights = np.random.rand(3, 2) * 2 -1
+        self.myID = nextAvailableID
         
     def evaluate(self, directOrGUI):
         """
             Generate the robot's world, its body, its neural network,
             and send the weights in this solution when it sends the synaptic weights.
         """
-        self.create_world()
-        self.create_3piece_robot()
-        self.generate_brain()
-        os.system("python simulate.py " + directOrGUI)
+        pass
         
-        # Read back the fitness function final evaluation        
-        f = open("fitness.txt", "r")
+        
+    def set_ID(self, id):
+        """
+            Set unique ID for each parent and child offspring.
+            
+            Parameters:
+            - id: Next available ID when robot generation.
+        """
+        self.myID = id
+        
+    def start_simulation(self, directOrGUI):
+        # self.create_world()
+        # self.create_3piece_robot()
+        self.generate_brain()
+        os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &" )
+    
+    def wait_for_simulation_to_end(self):
+        """
+            Reads fitness value from file and waits for simulation to be done 
+        """
+        while not os.path.exists(f"fitness{self.myID}.txt"):
+            time.sleep(0.01)
+        
+        f = open(f"fitness{self.myID}.txt", "r")
         self.fitness = float(f.read())
         f.close()
         
+        os.system(f'rm fitness{self.myID}.txt')
         
     def mutate(self):
         """
@@ -69,7 +91,9 @@ class SOLUTION:
         pyrosim.End()
         
     def generate_brain(self):
-        pyrosim.Start_NeuralNetwork("brain.nndf")
+        
+        # Create neural network
+        pyrosim.Start_NeuralNetwork(f"brain{self.myID}.nndf")
         
         # Send value from links sensors to sensor neuros.
         pyrosim.Send_Sensor_Neuron(name = 0 , linkName = "Torso")
