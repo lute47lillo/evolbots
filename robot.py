@@ -45,13 +45,22 @@ class ROBOT:
                 jointName = self.nn.Get_Motor_Neurons_Joint(neuronName)
                 desiredAngle = self.nn.Get_Value_Of(neuronName)
                 self.motors[jointName].Set_Value(self.robot3Piece_ID, desiredAngle)
-                print(neuronName, jointName, desiredAngle)
+        
         # for motor in self.motors.values():
         #     motor.Set_Value(self.robot3Piece_ID, timestep)
             
     def Think(self):
         self.nn.Update() # Propagate sensor values to hidden and motor neurons
-        self.nn.Print()
+        # self.nn.Print()
+        
+    def Get_Fitness(self):
+        state_of_link_0 = p.getLinkState(self.robot3Piece_ID,0) # (robot_ID, link_name)
+        positionOfLinkZero = state_of_link_0[0] # (x,y,z) coord. positions
+        xCoordinateOfLinkZero = positionOfLinkZero[0]
+        
+        # PART of Assignment 9
+        with open('fitness.txt', 'w') as f:
+            f.write(str(xCoordinateOfLinkZero))
         
         
         

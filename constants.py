@@ -33,3 +33,6 @@ targetAngles = np.linspace(0, 2*np.pi, 1000)
 # Calculate the scaled values using linear transformation
 scaled_values = (np.sin(targetAngles) - old_min) / (old_max - old_min) * (new_max - new_min) + new_min
 sin = np.sin(scaled_values)
+
+# Number of generations to evolve a solution
+n_generations = 15

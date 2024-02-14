@@ -12,10 +12,17 @@ import time
 
 class SIMULATION:
     
-    def __init__(self):
+    def __init__(self, directOrGUI):
         
         # Start the simulation engine
-        self.physicsClient = p.connect(p.GUI)
+        if directOrGUI == "DIRECT":
+            # Run the simulation blindly to not get it on screen
+            self.physicsClient = p.connect(p.DIRECT) 
+        else:
+            # Heads-up mode
+            self.physicsClient = p.connect(p.GUI, options="--width=1920 --height=1080")
+        
+        
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         # p.configureDebugVisualizer(p.COV_ENABLE_GUI,0)
 
@@ -26,14 +33,18 @@ class SIMULATION:
         self.robot = ROBOT()
         
     def Run(self):
-        for i in range(0,400):
+        for i in range(0,1000):
             p.stepSimulation()
             
             self.robot.Sense(i)
             self.robot.Think()
             self.robot.Act(i)
+            self.Get_Fitness()
             
             time.sleep(0.001)
+        
+    def Get_Fitness(self):
+        self.robot.Get_Fitness()
     
     def __del__(self):
 
