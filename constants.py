@@ -35,7 +35,15 @@ scaled_values = (np.sin(targetAngles) - old_min) / (old_max - old_min) * (new_ma
 sin = np.sin(scaled_values)
 
 # Number of generations to evolve a solution
-n_generations = 10
+n_generations = 20
 
 # Number of individuals per generation
-population_size = 10
+population_size = 20
+
+# Will depend on the ones created
+num_sensor_neurons = 5
+num_motor_neurons = 8
+
+# Make joint's angle range narrower or opposite by setting this variable
+# By setting to 0.2 -> oscillatory gait: taking one large lunge and then coming to a stop is now longer an option.
+motor_joint_range = 0.2
